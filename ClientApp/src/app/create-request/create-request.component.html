@@ -1,0 +1,39 @@
+
+<table class='table table-striped' aria-labelledby="tableLabel">
+  <thead>
+  <tr>
+    <th>Заголовок</th>
+    <th>Описание</th>
+    <th>E-mail</th>
+    <th>Дата окончания разработки</th>
+    <th>Приложение</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td><input (change)="onChangeTitle($event)"/></td>
+    <td><input (change)="onChangeDescription($event)"/></td>
+    <td><input type="email" name="email" ngModel #email="ngModel" required
+               pattern="^[a-z0-9._%+\-]+@[a-z0-9.\-]+.[a-z]{2,4}$"
+               (change)="onChangeEmail($event)"/>
+      <p *ngIf="email.errors?.['required']">Email is required</p>
+      <p *ngIf="email.errors?.['pattern']">Not a valid Email</p>
+    </td>
+    <td><input (change)="onChangeDateDeadline($event)" type="date"/></td>
+    <td>
+      <input list="apps" name="menace" (change)="onChangeApplication($event)">
+      <datalist id="apps">
+        <option *ngFor="let application of applications">{{application?.name}}</option>
+      </datalist>
+    </td>
+  </tr>
+  </tbody>
+</table>
+<form>
+<input type="submit"
+       [disabled]="(email.errors?.['pattern'] && email.errors?.['required'])
+       && !isSelectedDate"
+       value="Добавить заявку"
+       (click)="addRequest()"
+       class="btn btn-sm btn-success"/>
+</form>

@@ -1,3 +1,8 @@
 ﻿namespace TFCTestTask.Models;
 
-public record Application(int Id, string Name);
+public class Application
+{
+    public int Id { get; set; }
+
+    public string Name { get; set; }
+}
