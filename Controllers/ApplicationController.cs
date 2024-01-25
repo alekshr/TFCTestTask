@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TFCTestTask.Contexts;
-using TFCTestTask.Models;
 
 namespace TFCTestTask.Controllers;
 
@@ -18,37 +17,39 @@ public class ApplicationController : ControllerBase
     }
 
     [HttpGet("allapplications")]
-    public IEnumerable<Application> AllApplications()
+    public IActionResult AllApplications()
     {
         var apps = applicationContext
             .Applications
             .ToList();
-        return apps;
+
+        return Ok(apps);
     }
-    
+
     [HttpGet("applications/{page?}")]
-    public IEnumerable<Application> Applications(int page)
+    public IActionResult Applications(int page)
     {
         var skip = (page - 1) * this.pageSize;
+
         var apps = applicationContext
             .Applications
             .OrderBy(app => app.Id)
             .Skip(skip)
             .Take(this.pageSize)
             .ToList();
-        return apps;
+        return Ok(apps);
     }
-    
+
     [HttpGet("count-applications")]
-    public int GetCountApplications()
+    public IActionResult GetCountApplications()
     {
         var countApplications = applicationContext
             .Applications
             .Count();
-        
+
         var totalPages = (countApplications / this.pageSize) +
                          (countApplications % this.pageSize == 0 ? 0 : 1);
 
-        return totalPages;
+        return Ok(totalPages);
     }
 }

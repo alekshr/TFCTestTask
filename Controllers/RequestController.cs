@@ -9,21 +9,13 @@ namespace TFCTestTask.Controllers;
 [Route("[controller]")]
 public class RequestController : ControllerBase
 {
+    private readonly int pageSize;
     private readonly ApplicationContext applicationContext;
 
     public RequestController(ApplicationContext applicationContext)
     {
+        this.pageSize = 10;
         this.applicationContext = applicationContext;
-    }
-    
-    [HttpGet]
-    public IEnumerable<Request> Get()
-    {
-        var requests = applicationContext
-            .Requests
-            .Include(request => request.Application)
-            .ToList();
-        return requests;
     }
 
     [HttpPost]
@@ -36,9 +28,10 @@ public class RequestController : ControllerBase
             applicationContext.SaveChanges();
             return Ok();
         }
+
         return BadRequest(ModelState);
     }
-    
+
     [HttpPut]
     public IActionResult Put([FromBody] Request request)
     {
@@ -46,8 +39,38 @@ public class RequestController : ControllerBase
         {
             applicationContext.Update(request);
             applicationContext.SaveChanges();
-            return Ok();
+            return Ok(request);
         }
+
         return BadRequest(ModelState);
+    }
+
+    [HttpGet("requests/{page?}")]
+    public IActionResult Requests(int page)
+    {
+        List<Request> requests = null;
+        var skip = (page - 1) * this.pageSize;
+
+        requests = applicationContext
+            .Requests
+            .Include(request => request.Application)
+            .OrderBy(req => req.Id)
+            .Skip(skip)
+            .Take(this.pageSize)
+            .ToList();
+        return Ok(requests);
+    }
+
+    [HttpGet("count-requests")]
+    public IActionResult GetCountRequests()
+    {
+        var countRequests = applicationContext
+            .Requests
+            .Count();
+
+        var totalPages = (countRequests / this.pageSize) +
+                         (countRequests % this.pageSize == 0 ? 0 : 1);
+
+        return Ok(totalPages);
     }
 }
