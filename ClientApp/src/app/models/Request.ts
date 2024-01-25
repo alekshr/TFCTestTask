@@ -1,25 +1,24 @@
 ﻿import {Application} from "./Application";
 
 export class Request {
-
-  Id: number;
-  Title: string;
-  Descriptions: string;
-  Email: string;
-  DateTimeDeadline: Date;
-  ApplicationId: number;
-  Application: Application | null;
+  id: number;
+  title: string;
+  descriptions: string;
+  email: string;
+  dateTimeDeadline: Date;
+  applicationId: number;
+  application: Application | null;
 
 
 
   constructor() {
-    this.Id = 1;
-    this.Title = "";
-    this.Descriptions = "";
-    this.Email = "";
-    this.DateTimeDeadline = new Date();
-    this.ApplicationId = -1;
-    this.Application = null;
+    this.id = 1;
+    this.title = "";
+    this.descriptions = "";
+    this.email = "";
+    this.dateTimeDeadline = new Date();
+    this.applicationId = -1;
+    this.application = null;
   }
 
 }

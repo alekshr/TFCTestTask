@@ -39,15 +39,15 @@ public class RequestController : ControllerBase
         return BadRequest(ModelState);
     }
     
-    // [HttpPut]
-    // public IActionResult Put(Request request)
-    // {
-    //     if (ModelState.IsValid)
-    //     {
-    //         applicationContext.Update(request);
-    //         applicationContext.SaveChanges();
-    //         return Ok();
-    //     }
-    //     return BadRequest(ModelState);
-    // }
+    [HttpPut]
+    public IActionResult Put([FromBody] Request request)
+    {
+        if (ModelState.IsValid)
+        {
+            applicationContext.Update(request);
+            applicationContext.SaveChanges();
+            return Ok();
+        }
+        return BadRequest(ModelState);
+    }
 }

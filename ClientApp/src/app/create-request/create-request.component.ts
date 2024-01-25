@@ -31,7 +31,7 @@ export class RequestsCreateComponent {
     this.http = http;
     this.url = baseUrl + 'request';
     this.applications = new Array<Application>();
-    this.http.get<Application[]>(baseUrl + 'application').subscribe(result => {
+    this.http.get<Application[]>(baseUrl + 'application' + '/allapplications').subscribe(result => {
       for (const application of result) {
         this.applications.push(application);
       }
@@ -39,7 +39,7 @@ export class RequestsCreateComponent {
   }
 
 
-  public addProduct() {
+  public addRequest() {
     const body = JSON.stringify(this.request);
     console.log(body);
     return this.http.post<Request>(this.url, body, { headers: this.headers})
@@ -49,22 +49,22 @@ export class RequestsCreateComponent {
   }
 
   public onChangeEmail(event: any) {
-    this.request.Email = event.target.value;
+    this.request.email = event.target.value;
   }
 
   public onChangeTitle(event: any) {
-    this.request.Title = event.target.value;
+    this.request.title = event.target.value;
   }
 
   public onChangeDescription(event: any) {
-    this.request.Descriptions = event.target.value;
+    this.request.descriptions = event.target.value;
   }
 
   public onChangeDateDeadline(event: any) {
     if (event.target.value === undefined) {
-      this.request.DateTimeDeadline = event.target.value;
+      this.request.dateTimeDeadline = event.target.value;
       this._isSelectedDate = true;
-      console.log(`date = ${this.request.DateTimeDeadline}`)
+      console.log(`date = ${this.request.dateTimeDeadline}`)
     } else {
       this._isSelectedDate = false;
     }
@@ -73,8 +73,9 @@ export class RequestsCreateComponent {
   public onChangeApplication(event: any) {
     let apps = this.applications.find(app => app.name == event.target.value)
     let app = apps as Application | null;
-    this.request.Application = app;
-    this.request.ApplicationId = app?.id as number;
+    console.log(app);
+    this.request.application = app;
+    this.request.applicationId = app?.id as number;
   }
 
 }

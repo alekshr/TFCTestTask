@@ -21,10 +21,10 @@
     </td>
     <td><input (change)="onChangeDateDeadline($event)" type="date"/></td>
     <td>
-      <select (change)="onChangeApplication($event)" id="apps">
-        <option>--Выбрать--</option>
+      <input list="apps" name="menace" (change)="onChangeApplication($event)">
+      <datalist id="apps">
         <option *ngFor="let application of applications">{{application?.name}}</option>
-      </select>
+      </datalist>
     </td>
   </tr>
   </tbody>
@@ -34,6 +34,6 @@
        [disabled]="(email.errors?.['pattern'] && email.errors?.['required'])
        && !isSelectedDate"
        value="Добавить заявку"
-       (click)="addProduct()"
+       (click)="addRequest()"
        class="btn btn-sm btn-success"/>
 </form>

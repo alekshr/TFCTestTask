@@ -1,4 +1,4 @@
-<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="requests.length">
+<table class='table table-striped' aria-labelledby="tableLabel" >
   <thead>
   <tr>
     <th>Номер заявки</th>
@@ -10,13 +10,28 @@
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let request of requests">
-    <td>{{ request.Id }}</td>
-    <td>{{ request.Title }}</td>
-    <td>{{ request.Descriptions }}</td>
-    <td>{{ request.Email }}</td>
-    <td>{{ request.DateTimeDeadline | date:'fullDate' }}</td>
-    <td>{{ request?.Application?.name }}</td>
+  <tr *ngFor="let request of requests | keyvalue">
+    <td>{{ request.value.id }}</td>
+    <td><input value="{{ request.value.title }}" (change)="onChangeTitle($event, request.value.id)" /></td>
+    <td><input value="{{ request.value.descriptions }}" (change)="onChangeDescriptions($event, request.value.id)" /></td>
+    <td>
+      <input type="email" name="email" ngModel #email="ngModel" required
+             pattern="^[a-z0-9._%+\-]+@[a-z0-9.\-]+.[a-z]{2,4}$"
+             value="{{request.value.email}}" (change)="onChangeEmail($event, request.value.id)"/>
+      <p *ngIf="email.errors?.['required']">Email is required</p>
+      <p *ngIf="email.errors?.['pattern']">Not a valid Email</p>
+    </td>
+    <td><input value="{{ request.value.dateTimeDeadline | date:'dd.MM.yyyy' }}" type="date" (change)="onChangeDateDeadline($event, request.value.id)"/></td>
+    <td>{{ request.value.application?.name }}</td>
+    <td>
+    <form>
+      <input type="submit"
+             [disabled]="(email.errors?.['pattern'] && email.errors?.['required'])"
+             value="Обновить"
+             (click)="changeRequest(request.value.id)"
+             class="btn btn-sm btn-success"/>
+    </form>
+    </td>
   </tr>
   </tbody>
 </table>
