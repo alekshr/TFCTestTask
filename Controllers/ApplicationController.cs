@@ -19,7 +19,9 @@ public class ApplicationController : ControllerBase
     [HttpGet]
     public IEnumerable<Application> Get()
     {
-        var applications = applicationContext.Applications.ToList();
+        var applications = applicationContext
+            .Applications
+            .ToList();
         return applications;
     }
 }

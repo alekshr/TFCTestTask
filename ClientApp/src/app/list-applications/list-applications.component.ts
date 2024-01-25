@@ -1,5 +1,7 @@
 import {Component, Inject} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Application } from '../models/Application';
+
 
 @Component({
   selector: 'app-list-applications',
@@ -21,9 +23,5 @@ export class ApplicationListComponent {
   }
 }
 
-interface Application {
-  id: number
-  name: string;
-}
 
 

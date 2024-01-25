@@ -10,6 +10,8 @@ import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import {ApplicationListComponent} from "./list-applications/list-applications.component";
+import {RequestsComponent} from "./list-requests/list-requests.component";
+import {RequestsCreateComponent} from "./create-request/create-request.component";
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import {ApplicationListComponent} from "./list-applications/list-applications.co
     HomeComponent,
     CounterComponent,
     FetchDataComponent,
-    ApplicationListComponent
+    ApplicationListComponent,
+    RequestsComponent,
+    RequestsCreateComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -29,6 +33,9 @@ import {ApplicationListComponent} from "./list-applications/list-applications.co
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'applications', component: ApplicationListComponent },
+      { path: 'requests', component: RequestsComponent },
+      { path: 'request-create', component: RequestsCreateComponent },
+
     ])
   ],
   providers: [],

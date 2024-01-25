@@ -1,0 +1,22 @@
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="requests.length">
+  <thead>
+  <tr>
+    <th>Номер заявки</th>
+    <th>Заголовок</th>
+    <th>Описание</th>
+    <th>E-mail</th>
+    <th>Дата окончания разработки</th>
+    <th>Приложение</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let request of requests">
+    <td>{{ request.Id }}</td>
+    <td>{{ request.Title }}</td>
+    <td>{{ request.Descriptions }}</td>
+    <td>{{ request.Email }}</td>
+    <td>{{ request.DateTimeDeadline | date:'fullDate' }}</td>
+    <td>{{ request?.Application?.name }}</td>
+  </tr>
+  </tbody>
+</table>
