@@ -31,8 +31,8 @@
 </table>
 <form>
 <input type="submit"
-       [disabled]="(email.errors?.['pattern'] && email.errors?.['required'])
-       && !isSelectedDate"
+       [disabled]="(email.errors?.['pattern'] || email.errors?.['required'])
+       || !isSelectedDate"
        value="Добавить заявку"
        (click)="addRequest()"
        class="btn btn-sm btn-success"/>

@@ -42,10 +42,10 @@ export class RequestsCreateComponent {
   public addRequest() {
     const body = JSON.stringify(this.request);
     console.log(body);
-    return this.http.post<Request>(this.url, body, { headers: this.headers})
+    this.http.post<Request>(this.url, body, { headers: this.headers})
       .subscribe(result => {
-        console.error(result);
-      }, error => console.error(error));
+        alert(`Создана заявка ${result}`);
+      }, error => alert(`Ошибка при создании заявки${error}`));
   }
 
   public onChangeEmail(event: any) {
@@ -61,7 +61,7 @@ export class RequestsCreateComponent {
   }
 
   public onChangeDateDeadline(event: any) {
-    if (event.target.value === undefined) {
+    if (event.target.value !== undefined) {
       this.request.dateTimeDeadline = event.target.value;
       this._isSelectedDate = true;
       console.log(`date = ${this.request.dateTimeDeadline}`)

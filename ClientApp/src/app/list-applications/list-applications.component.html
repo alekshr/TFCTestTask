@@ -2,7 +2,13 @@
   <li>{{ application.name }}</li>
 </ul>
 
-<div class="paginate">
 
-  <pagination-controls [maxSize]=countPages (pageChange)="changePage($event)"></pagination-controls>
-</div>
+<button [disabled]="currentPage === 1"
+  (click)="prevPage()">
+  Prev
+</button>
+
+<button [disabled]="currentPage === countPages"
+        (click)="nextPage()">
+  Next
+</button>
