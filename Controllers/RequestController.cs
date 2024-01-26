@@ -39,7 +39,7 @@ public class RequestController : ControllerBase
         {
             applicationContext.Update(request);
             applicationContext.SaveChanges();
-            return Ok(request);
+            return Ok(request.Id);
         }
 
         return BadRequest(ModelState);

@@ -1,9 +1,7 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Application} from '../models/Application';
 import {Request} from "../models/Request";
-import {NgForm} from "@angular/forms";
-import {catchError} from "rxjs";
 
 @Component({
   selector: 'app-create-request',
@@ -40,12 +38,15 @@ export class RequestsCreateComponent {
 
 
   public addRequest() {
+    if(this.request.application === undefined || this.request.application === null){
+      alert("Выберите приложение из списка");
+      return;
+    }
     const body = JSON.stringify(this.request);
-    console.log(body);
     this.http.post<Request>(this.url, body, { headers: this.headers})
       .subscribe(result => {
-        alert(`Создана заявка ${result}`);
-      }, error => alert(`Ошибка при создании заявки${error}`));
+        alert(`Создана заявка`);
+      }, error => alert(`Ошибка при создании заявки ${JSON.stringify(error)}`));
   }
 
   public onChangeEmail(event: any) {
@@ -64,7 +65,6 @@ export class RequestsCreateComponent {
     if (event.target.value !== undefined) {
       this.request.dateTimeDeadline = event.target.value;
       this._isSelectedDate = true;
-      console.log(`date = ${this.request.dateTimeDeadline}`)
     } else {
       this._isSelectedDate = false;
     }
@@ -73,7 +73,6 @@ export class RequestsCreateComponent {
   public onChangeApplication(event: any) {
     let apps = this.applications.find(app => app.name == event.target.value)
     let app = apps as Application | null;
-    console.log(app);
     this.request.application = app;
     this.request.applicationId = app?.id as number;
   }
