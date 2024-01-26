@@ -1,0 +1,60 @@
+<table class='table table-striped' aria-labelledby="tableLabel">
+  <thead>
+  <tr>
+    <th>Номер заявки</th>
+    <th>Заголовок</th>
+    <th>Описание</th>
+    <th>E-mail</th>
+    <th>Дата окончания разработки</th>
+    <th>Приложение</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let request of requests | keyvalue">
+    <td>{{ request.value.id }}</td>
+    <td><input
+      value="{{ request.value.title }}" (change)="onChangeTitle($event, request.value.id)"/></td>
+    <td><input value="{{ request.value.descriptions }}" (change)="onChangeDescriptions($event, request.value.id)"/></td>
+    <td>
+      <input type="email" name="email" [(ngModel)]="request.value.email"
+             ngModel #email="ngModel" required
+             pattern="^[a-z0-9._%+\-]+@[a-z0-9.\-]+.[a-z]{2,4}$"
+             (change)="onChangeEmail($event, request.value.id)"/>
+      <p *ngIf="email.errors?.['required']">Email is required</p>
+      <p *ngIf="email.errors?.['pattern']">Not a valid Email</p>
+    </td>
+    <td>
+
+      <input
+        ngModel #date="ngModel" required
+        [ngModel]="request.value.dateTimeDeadline | date:'yyyy-MM-dd'"
+        (ngModelChange)="request.value.dateTimeDeadline = $event; "
+        name="dt"
+        type="date"/>
+
+    </td>
+    <td>{{ request.value.application?.name }}</td>
+    <td>
+      <form>
+        <input type="submit"
+               [disabled]="(email.errors?.['pattern'] ||
+               email.errors?.['required'] ||
+                date.value === null)"
+               value="Обновить"
+               (click)="changeRequest(request.value.id)"
+               class="btn btn-sm btn-success"/>
+      </form>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<button [disabled]="currentPage === 1"
+        (click)="prevPage()">
+  Prev
+</button>
+
+<button [disabled]="currentPage === countPages"
+        (click)="nextPage()">
+  Next
+</button>

@@ -132,5 +132,8 @@
       }
     }
   },
-  "defaultProject": "TFCTestTask"
+  "defaultProject": "TFCTestTask",
+  "cli": {
+    "analytics": "53b057ed-a241-4be7-8cc0-8b661325ef9e"
+  }
 }

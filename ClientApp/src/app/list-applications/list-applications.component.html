@@ -1,0 +1,14 @@
+<ul *ngFor="let application of applications">
+  <li>{{ application.name }}</li>
+</ul>
+
+
+<button [disabled]="currentPage === 1"
+  (click)="prevPage()">
+  Prev
+</button>
+
+<button [disabled]="currentPage === countPages"
+        (click)="nextPage()">
+  Next
+</button>
