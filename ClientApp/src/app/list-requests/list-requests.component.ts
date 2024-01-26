@@ -46,7 +46,7 @@ export class RequestsComponent implements OnInit {
   public changeRequest(id: number) {
     let body = JSON.stringify(this.requests[id]);
     this.http.put<Request>(this.baseUrl + 'request', body, {headers: this.headers}).subscribe(result => {
-      alert(`Изменена заявка ${result}`);
+      alert(`Изменена заявка номер ${result}`);
     }, error =>  alert(`Ошибка при изменении заявки ${error}`));
   }
 
